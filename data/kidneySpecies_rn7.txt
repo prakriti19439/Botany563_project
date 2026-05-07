@@ -1,0 +1,9 @@
+(sus_scrofa,(((rattus_norvegicus,mus_musculus),(acomys_dimidiatus,acomys_russatus)),(homo_sapiens,macaca_fas)));
+
+acomys_dimidiatus	data/genome_assemblies/Acomys_dimidiatus-GCA_907164435.1-softmasked.fa
+acomys_russatus	data/genome_assemblies/Acomys_russatus-GCA_903995435.1-softmasked.fa
+homo_sapiens	data/genome_assemblies/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+mus_musculus	data/genome_assemblies/Mus_musculus.GRCm38.dna_sm.primary_assembly.fa
+rattus_norvegicus	data/genome_assemblies/Rattus_norvegicus.mRatBN7.2.dna_sm.toplevel.fa
+sus_scrofa	data/genome_assemblies/Sus_scrofa.Sscrofa11.1.dna_sm.toplevel.fa
+macaca_fas	data/genome_assemblies/Macaca_fascicularis.Macaca_fascicularis_5.0.dna_sm.toplevel.fa
