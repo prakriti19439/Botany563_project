@@ -63,7 +63,6 @@ The scripts use the following species labels.
 | `acomys_dimidiatus` | Acomys dimidiatus | GCA_907164435.1 / mAcoDim1 |
 | `acomys_russatus` | Acomys russatus | GCA_903995435.1 / mAcoRus1.1 |
 
-Important note: this workflow uses **Macaca fascicularis**, not Macaca mulatta.
 
 ---
 
@@ -108,27 +107,6 @@ Botany563_project/
     └── RunStitchingLiftOver.sh
 ```
 
-Recommended output folders created during the workflow:
-
-```text
-data/genome_assemblies/
-data/chrom_sizes/
-data/bins/
-
-results/cactus_alignment/
-results/chain_files_res/
-results/liftover/
-results/region_level_orthology/
-results/cluster_fastas/
-results/mafft_alignments/
-results/muscle_alignments/
-results/fasttree/
-results/iqtree/
-results/mrbayes/
-results/rooted_trees/
-results/validation/
-```
-
 ---
 
 ## 5. Software Requirements
@@ -156,7 +134,10 @@ The workflow requires the following software.
 | Seqmagick | FASTA-to-NEXUS conversion for MrBayes |
 | OrthoFinder source code | Rooting/resolving tree logic |
 
-Example environment setup:
+
+## 6. Environment Setup
+
+Create the main conda/mamba environment:
 
 ```bash
 mamba create -n region_trees \
@@ -164,17 +145,89 @@ mamba create -n region_trees \
     -c conda-forge -c bioconda
 
 mamba activate region_trees
-
-mamba install -c bioconda bedtools samtools mafft muscle fasttree iqtree mrbayes seqmagick ucsc-liftover
 ```
 
-Cactus may need a separate install or cluster module:
+Install general dependencies:
 
 ```bash
-module load apptainer/cactus-2
+mamba install -c bioconda \
+    bedtools \
+    samtools \
+    mafft \
+    muscle \
+    fasttree \
+    iqtree \
+    mrbayes \
+    seqmagick \
+    ucsc-liftover
+```
+
+Install Progressive Cactus:
+
+```bash
+mamba install -c bioconda -c conda-forge cactus
+```
+
+Verify installation:
+
+```bash
+cactus --help
 ```
 
 ---
+
+### HAL Tools Installation
+
+Clone and build HAL tools:
+
+```bash
+git clone https://github.com/ComparativeGenomicsToolkit/hal.git
+cd hal
+
+make
+```
+
+Important executables used:
+
+```text
+halLiftover
+hal2fasta
+halStats
+```
+
+---
+
+### UCSC Utilities Installation
+
+Required UCSC tools:
+
+```text
+faToTwoBit
+pslPosTarget
+axtChain
+liftOver
+```
+
+Download Linux binaries:
+
+```bash
+mkdir -p thirdparty/ucsc_tools
+cd thirdparty/ucsc_tools
+
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/faToTwoBit
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/pslPosTarget
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/axtChain
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/liftOver
+
+chmod +x *
+```
+
+Add UCSC tools to PATH:
+
+```bash
+export PATH=$PATH:$(pwd)
+```
+
 
 # 7. Reproducible Workflow
 
